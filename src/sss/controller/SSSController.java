@@ -12,7 +12,7 @@ public class SSSController {
   Cart cart;
   SSSView view;
   Customer customer;
-  Manager manager;
+  Manager manager = new Manager();
 
   String[] menuList = {
     "0. 종료",
@@ -69,24 +69,14 @@ public class SSSController {
 
     while (bool2) {
       switch (view.selectMenu(managerML)) {
-        case 1 -> deleteProduct();
-        case 2 -> addProduct();
+        case 1 -> addProduct();
+        case 2 -> deleteProduct();
         case 0 -> bool2 = false;
         default -> view.showMessage("\n잘못된 메뉴 번호입니다.");
       }
     }
   }
 
-
-
-  private void deleteProduct() {
-    String code = view.readString("삭제할 상품의 코드를 입력하세요: ");
-    if (warehouse.deleteProduct(code)) {
-        view.showMessage("상품이 성공적으로 삭제되었습니다.");
-    } else {
-        view.showMessage("상품을 찾을 수 없습니다.");
-    }
-  }
 
   private void addProduct() {
     String code = view.readString("추가할 상품의 코드를 입력하세요: ");
@@ -102,7 +92,14 @@ public class SSSController {
     }
   }
 
-
+  private void deleteProduct() {
+    String code = view.readString("삭제할 상품의 코드를 입력하세요: ");
+    if (warehouse.deleteProduct(code)) {
+        view.showMessage("상품이 성공적으로 삭제되었습니다.");
+    } else {
+        view.showMessage("상품을 찾을 수 없습니다.");
+    }
+  }
 
   private void viewItemInfo() {
     view.showItemInfo(warehouse);
