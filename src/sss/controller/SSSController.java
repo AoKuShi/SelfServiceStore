@@ -29,7 +29,8 @@ public class SSSController {
   String[] managerML = {
     "0. 돌아가기",
     "1. 상품 추가",
-    "2. 상품 삭제"
+    "2. 상품 삭제",
+    "3. 상품 정보 보기"
   };
 
   public SSSController(Warehouse warehouse, Cart cart, SSSView view) {
@@ -71,6 +72,7 @@ public class SSSController {
       switch (view.selectMenu(managerML)) {
         case 1 -> addProduct();
         case 2 -> deleteProduct();
+        case 3 -> viewItemInfo();
         case 0 -> bool2 = false;
         default -> view.showMessage("\n잘못된 메뉴 번호입니다.");
       }
