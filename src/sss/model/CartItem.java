@@ -1,9 +1,9 @@
 package sss.model;
 
 public class CartItem {
-  Product product;
-  String code;
-  int quantity;
+  private Product product;
+  private String code;
+  private int quantity;
 
   public CartItem(Product product) {
     this.product = product;

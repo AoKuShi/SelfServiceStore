@@ -7,8 +7,8 @@ public class Manager {
     return password;
   }
 
-  public void setPassword(int password) {
-    this.password = password;
-  }
+  // public void setPassword(int password) {
+  //   this.password = password;
+  // }
   
 }

@@ -6,8 +6,8 @@ public class Product {
   private String company;
   private int price;
 
-  public Product(String codeNum, String name, String company, int price) {
-    this.code = codeNum;
+  public Product(String code, String name, String company, int price) {
+    this.code = code;
     this.name = name;
     this.company = company;
     this.price = price;

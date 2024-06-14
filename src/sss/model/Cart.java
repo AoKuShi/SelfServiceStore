@@ -37,7 +37,7 @@ public class Cart {
 
   public CartItem getCartItem(Product product) {
     for (CartItem item : cartItemList) {
-      if (item.getProduct() == product)
+      if (item.getProduct().equals(product))
         return item;
     }
     return null;

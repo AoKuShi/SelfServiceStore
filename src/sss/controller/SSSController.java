@@ -14,25 +14,6 @@ public class SSSController {
   Customer customer;
   Manager manager = new Manager();
 
-  String[] menuList = {
-    "0. 종료",
-    "1. 상품 정보 보기",
-    "2. 장바구니 보기",
-    "3. 장바구니에 상품 추가",
-    "4. 장바구니 상품 삭제",
-    "5. 장바구니 상품 수량 변경",
-    "6. 장바구니 비우기",
-    "7. 주문",
-    "8. 관리자 모드"
-  };
-
-  String[] managerML = {
-    "0. 돌아가기",
-    "1. 상품 추가",
-    "2. 상품 삭제",
-    "3. 상품 정보 보기"
-  };
-
   public SSSController(Warehouse warehouse, Cart cart, SSSView view) {
     this.warehouse = warehouse;
     this.cart = cart;
@@ -45,7 +26,7 @@ public class SSSController {
     boolean bool1 = true;
 
     while (bool1) {
-      switch (view.selectMenu(menuList)) {
+      switch (view.selectMenu(view.getMenu(0))) {
         case 1 -> viewItemInfo();
         case 2 -> viewCart();
         case 3 -> addCart();
@@ -69,7 +50,7 @@ public class SSSController {
     boolean bool2 = true;
 
     while (bool2) {
-      switch (view.selectMenu(managerML)) {
+      switch (view.selectMenu(view.getMenu(1))) {
         case 1 -> addProduct();
         case 2 -> deleteProduct();
         case 3 -> viewItemInfo();

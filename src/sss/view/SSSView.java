@@ -10,9 +10,8 @@ import sss.model.Warehouse;
 public class SSSView {
   Scanner sc = new Scanner(System.in);
   Date date = new Date();
-  
-  
-  public void inputCardNum(Customer customer){
+
+  public void inputCardNum(Customer customer) {
     System.out.print("\n결제할 카드를 등록해주세요.\n>> 카드번호 : ");
     customer.setCardNum(sc.nextLine());
   }
@@ -26,7 +25,7 @@ public class SSSView {
     int menu = readNumber("\n선택하고 싶은 메뉴의 번호를 입력하세요.\n>> 메뉴 선택 : ");
 
     if (menu < 0 || menu >= menuList.length) {
-      System.out.println("\n0부터 " + (menuList.length-1) + "까지의 숫자를 입력하세요.");
+      System.out.println("\n0부터 " + (menuList.length - 1) + "까지의 숫자를 입력하세요.");
       return selectMenu(menuList);
     }
 
@@ -34,14 +33,18 @@ public class SSSView {
   }
 
   public int readNumber(String str) {
-    int result;
+    int result; 
     try {
       System.out.print(str);
-      result = sc.nextInt();
-      sc.nextLine();
-      return result;
+      result = Integer.parseInt(sc.nextLine());
+      if (result >= 0) {
+        return result;
+      } else {
+        System.out.println("\n음수는 입력하실 수 없습니다.");
+        return readNumber(str);
+      }
     } catch (Exception e) {
-      System.out.println("숫자를 입력해주세요.");
+      System.out.println("\n정수를 입력해주세요.");
       return readNumber(str);
     }
   }
@@ -67,7 +70,7 @@ public class SSSView {
 
   public boolean showCart(Cart cart) {
     if (cart.isEmpty()) {
-      System.out.println(">> 장바구니가 비어있습니다.");
+      System.out.println("\n>> 장바구니가 비어있습니다.");
       return true;
     }
 
@@ -75,16 +78,16 @@ public class SSSView {
       System.out.println(cart.getCartItemInfo(i));
     }
 
-    System.out.println("총 금액 : " + cart.getTotalPrice() + "원");
+    System.out.println("\n총 금액 : " + cart.getTotalPrice() + "원");
     return false;
   }
 
   public String selectCode(Warehouse warehouse) {
-    System.out.print("추가할 상품의 바코드를 입력 : ");
+    System.out.print("\n추가할 상품의 바코드를 입력 : ");
     String code = sc.nextLine();
 
     if (warehouse.isValidItem(code)) {
-      System.out.println("잘못된 바코드입니다.");
+      System.out.println("\n잘못된 바코드입니다.");
       return selectCode(warehouse);
     }
 
@@ -92,11 +95,11 @@ public class SSSView {
   }
 
   public String selectCode(Cart cart) {
-    System.out.print("상품 바코드를 입력 : ");
+    System.out.print("\n상품 바코드를 입력 : ");
     String code = sc.nextLine();
 
     if (cart.isValidItem(code)) {
-      System.out.println("잘못된 바코드입니다.");
+      System.out.println("\n잘못된 바코드입니다.");
       return selectCode(cart);
     }
 
@@ -104,19 +107,21 @@ public class SSSView {
   }
 
   public boolean askConfirm(String message, String yes) {
-		System.out.print(message);
+    System.out.print(message);
 
-		if (sc.nextLine().equals(yes)) return true;
-		return false;
+    if (sc.nextLine().equals(yes))
+      return true;
+    return false;
   }
 
   public int inputQuantity(int min, int max) {
     int number;
-    
+
     while (true) {
-      number = readNumber(">> 수량 입력 (" + min + " ~ " + max + "): ");
-      if (number >= min && number <= max) break;
-      System.out.println("잘못된 수량입니다. 다시 입력해주세요.");
+      number = readNumber("\n>> 수량 입력 (" + min + " ~ " + max + "): ");
+      if (number >= min && number <= max)
+        break;
+      System.out.println("\n잘못된 수량입니다. 다시 입력해주세요.");
     }
 
     return number;
@@ -124,22 +129,45 @@ public class SSSView {
 
   public boolean showOrder(Cart cart, Customer customer) {
     System.out.println();
-		// 장바구니 보여주기
-		System.out.println("***** 결제할 상품 ******");
+    // 장바구니 보여주기
+    System.out.println("\n***** 결제할 상품 ******");
     if (showCart(cart)) {
-      System.out.println("결제할 상품이 없습니다.");
+      System.out.println("\n결제할 상품이 없습니다.");
       return true;
     }
-		
-		// 배송 정보 보여주기 - 고객 이름, 전화번호, 주소, 이메일주소
-		System.out.println("***** 결제 정보 ******");
-		System.out.println(">> 카드 번호 : " + customer.getCardNum());
+
+    // 배송 정보 보여주기 - 고객 이름, 전화번호, 주소, 이메일주소
+    System.out.println("\n***** 결제 정보 ******");
+    System.out.println(">> 카드 번호 : " + customer.getCardNum());
     System.out.println(">> 결제 날짜 : " + date);
-		System.out.println();
+    System.out.println();
 
     return false;
   }
 
+  public String[] getMenu(int number) {
+    String[] menuList = {
+        "0. 종료",
+        "1. 상품 정보 보기",
+        "2. 장바구니 보기",
+        "3. 장바구니에 상품 추가",
+        "4. 장바구니 상품 삭제",
+        "5. 장바구니 상품 수량 변경",
+        "6. 장바구니 비우기",
+        "7. 주문",
+        "8. 관리자 모드"
+    };
 
+    String[] managerML = {
+        "0. 돌아가기",
+        "1. 상품 추가",
+        "2. 상품 삭제",
+        "3. 상품 정보 보기"
+    };
+
+    if (number == 0)
+      return menuList;
+    return managerML;
+  }
 
 }
